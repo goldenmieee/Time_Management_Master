@@ -1,7 +1,12 @@
 ---
-name: chat-coach
+name: time-management-master
 description: >
-  一个帮助用户进行恋爱交友聊天的指导 skill。当用户需要帮助回复消息、开场白、约见面、处理对方冷淡/已读不回、写聊天内容、或者问"我该怎么回"时，立刻使用这个 skill。适用于：恋爱追求、相亲、交友软件、线下认识后的跟进聊天等场景。只要用户粘贴了一段对话、问"怎么回复这个"、"我想约她/他出来怎么说"、"对方冷淡了怎么办"，就触发此 skill。
+  社交聊天教练 + 时间管理一体化 skill。主场景是聊天指导：当用户需要帮助回复消息、
+  开场白、约见面、处理对方冷淡/已读不回、写聊天内容、或者问"我该怎么回"时触发。
+  适用于恋爱追求、相亲、交友软件、线下认识后的跟进聊天等场景。
+  当对话进入"约见面"阶段，或者用户问"我什么时候有空""帮我记一下这个约定"等
+  涉及时间安排的内容时，参照本 skill 内的 time-manager/GUIDE.md 和
+  time-manager/scripts/time_manager.py 来处理日程记录、空闲查询、冲突检测和时间推荐。
 ---
 
 # Chat Coach Skill
@@ -146,9 +151,9 @@ description: >
 
 **第一步：先查自己的空档**
 
-调用 time-manager 拿到真实可用时间：
+调用时间管理脚本拿到真实可用时间（脚本位置：`time-manager/scripts/time_manager.py`）：
 ```bash
-python3 {TIME_MANAGER_SCRIPT} suggest --person [对象名] --duration 120 --json
+python3 time-manager/scripts/time_manager.py suggest --person [对象名] --duration 120 --json
 ```
 
 拿到结果后，把具体时间嵌进话术里：
@@ -170,7 +175,7 @@ python3 {TIME_MANAGER_SCRIPT} suggest --person [对象名] --duration 120 --json
 这个约定要记下来吗？下次问你有没有空，能帮你查。
 ```
 
-用户同意 → 传给 time-manager 走确认流程（见 time-manager skill）
+用户同意 → 按 `time-manager/GUIDE.md` 中「情况 1：新日程进来」的流程走确认和写入
 
 ---
 
@@ -223,11 +228,15 @@ python3 {TIME_MANAGER_SCRIPT} suggest --person [对象名] --duration 120 --json
 
 ---
 
-## 与 time-manager 的协作（约见面场景）
+## 时间管理子流程（约见面场景）
+
+> 详细的时间管理工作流、时间推断规则、脚本命令参考，见 `time-manager/GUIDE.md`
+> 脚本路径：`time-manager/scripts/time_manager.py`
+> 数据存储：`time-manager/data/schedule.json`
 
 ### 触发条件
 
-以下情况结束后，**必须移交给 time-manager skill**：
+以下情况结束后，**进入时间管理子流程**：
 
 - 用户说对方答应见面了
 - 用户正在讨论具体见面时间（"周六怎么样"、"她说下午有空"）
@@ -250,14 +259,14 @@ python3 {TIME_MANAGER_SCRIPT} suggest --person [对象名] --duration 120 --json
      task: [见面/吃饭/看电影/etc]
    ```
 
-3. time-manager 接手后处理确认和写入，不需要 chat-coach 再介入。
+3. 按 `time-manager/GUIDE.md` 的确认流程处理写入，写入后返回聊天教练视角继续。
 
-### 反向：time-manager 提供的信息给 chat-coach 用
+### 反向：用时间数据增强话术
 
-约见面话术时，chat-coach 可以向 time-manager 查询：
+在约见面话术之前，先查询真实空档：
 ```bash
-python3 {TIME_MANAGER_SCRIPT} free
-python3 {TIME_MANAGER_SCRIPT} suggest --person [对象名字] --duration 120
+python3 time-manager/scripts/time_manager.py free
+python3 time-manager/scripts/time_manager.py suggest --person [对象名字] --duration 120
 ```
 
 用查询结果来让"约见面"的话术更具体，比如：
