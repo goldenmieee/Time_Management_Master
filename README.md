@@ -2,8 +2,8 @@
 
 这是一个围绕“聊天推进 + 时间落地”设计的双 skill 组合：
 
-- `chat-coach.skill` 负责把对话从尬聊推进到可执行邀约
-- `time-manager.skill` 负责把口头约定变成可查询、可分析、可冲突检查的日程
+- **chat-coach** 负责把对话从尬聊推进到可执行邀约
+- **time-manager** 负责把口头约定变成可查询、可分析、可冲突检查的日程
 
 你可以把它理解为一个连续剧情：
 
@@ -14,35 +14,29 @@
 
 ## 1. 项目结构
 
-当前仓库包含原始 `.skill` 打包文件，以及解包后的可读内容：
-
 ```text
-Time_ManagementMaster/
-├─ chat-coach.skill
-├─ time-manager.skill
+Time_Management_Master/
 ├─ README.md
-├─ chat-coach_extracted/
-│  └─ chat-coach/
-│     ├─ SKILL.md
-│     └─ references/
-│        ├─ case-library.md
-│        └─ psychology-notes.md
-└─ time-manager_extracted/
-   └─ time-manager/
-      ├─ SKILL.md
-      ├─ data/
-      │  └─ schedule.json
-      └─ scripts/
-         └─ time_manager.py
+├─ chat-coach/
+│  ├─ SKILL.md
+│  └─ references/
+│     ├─ case-library.md
+│     └─ psychology-notes.md
+└─ time-manager/
+   ├─ SKILL.md
+   ├─ data/
+   │  └─ schedule.json
+   └─ scripts/
+      └─ time_manager.py
 ```
 
 其中：
 
-- `chat-coach_extracted/chat-coach/SKILL.md` 是聊天教练主逻辑
-- `chat-coach_extracted/chat-coach/references/` 是话术案例和心理机制解释
-- `time-manager_extracted/time-manager/SKILL.md` 是时间秘书主逻辑
-- `time-manager_extracted/time-manager/scripts/time_manager.py` 是可执行 CLI
-- `time-manager_extracted/time-manager/data/schedule.json` 是日程存储
+- `chat-coach/SKILL.md` — 聊天教练主逻辑
+- `chat-coach/references/` — 话术案例库 + 心理机制解释
+- `time-manager/SKILL.md` — 时间秘书主逻辑
+- `time-manager/scripts/time_manager.py` — 可执行 CLI 脚本
+- `time-manager/data/schedule.json` — 日程数据存储
 
 ---
 
@@ -202,7 +196,7 @@ flowchart TD
 
 ## 6. 关键命令示例
 
-以 `time-manager_extracted/time-manager/scripts/time_manager.py` 为例：
+以 `time-manager/scripts/time_manager.py` 为例：
 
 ```bash
 # 新增日程（程序调用最友好）
@@ -235,24 +229,7 @@ python3 time_manager.py analyze
 
 ---
 
-## 8. 推送到 GitHub 的最短流程
-
-如果你已创建好远程仓库，直接在当前目录执行：
-
-```bash
-git init
-git add .
-git commit -m "feat: add chat-coach and time-manager skills with story-driven README"
-git branch -M main
-git remote add origin <你的仓库地址>
-git push -u origin main
-```
-
-如果你已经初始化过仓库，只需要从 `git add .` 开始。
-
----
-
-## 9. 后续可扩展方向
+## 8. 后续可扩展方向
 
 1. 增加 `post-date-review` skill：约会后自动复盘并给下一步策略
 2. 给 time-manager 增加“提醒窗口”命令（例如提前 3 小时提醒）
