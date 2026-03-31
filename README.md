@@ -1,3 +1,7 @@
+🌐 [English](README.en.md) | **中文** | [한국어](README.ko.md)
+
+---
+
 # Time Management Master
 
 这是一个以“聊天指导”为主入口、内嵌“时间管理”子流程的一体化 skill。
