@@ -1,0 +1,27 @@
+{
+  "events": [
+    {
+      "id": 1,
+      "start": "2026-04-04 19:00",
+      "end": "2026-04-04 21:00",
+      "person": "小雨",
+      "location": "三里屯咖啡馆",
+      "task": "见面喝咖啡",
+      "notes": "",
+      "status": "confirmed",
+      "created_at": "2026-03-31 05:47"
+    },
+    {
+      "id": 2,
+      "start": "2026-04-05 14:00",
+      "end": "2026-04-05 16:00",
+      "person": "Alex",
+      "location": "公司",
+      "task": "项目会议",
+      "notes": "",
+      "status": "confirmed",
+      "created_at": "2026-03-31 05:47"
+    }
+  ],
+  "_next_id": 3
+}
